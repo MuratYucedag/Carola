@@ -1,8 +1,11 @@
 using Carola.BusinessLayer.Abstract;
 using Carola.BusinessLayer.Concrete;
+using Carola.BusinessLayer.ValidationRules;
 using Carola.DataAccessLayer.Abstract;
 using Carola.DataAccessLayer.Concrete;
 using Carola.DataAccessLayer.EntityFramework;
+using Carola.EntityLayer.Entities;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +15,16 @@ builder.Services.AddDbContext<CarolaContext>();
 builder.Services.AddScoped<IBrandService, BrandManager>();
 builder.Services.AddScoped<IBrandDal, EfBrandDal>();
 
-builder.Services.AddScoped<ICarService,CarManager>();
+builder.Services.AddScoped<ICarService, CarManager>();
 builder.Services.AddScoped<ICarDal, EfCarDal>();
 
-builder.Services.AddScoped<ICategoryService,CategoryManager>();
+builder.Services.AddScoped<ICategoryService, CategoryManager>();
 builder.Services.AddScoped<ICategoryDal, EfCategoryDal>();
+
+builder.Services.AddScoped<ILocationService, LocationManager>();
+builder.Services.AddScoped<ILocationDal, EfLocationDal>();
+
+builder.Services.AddScoped<IValidator<Brand>, BrandValidator>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
